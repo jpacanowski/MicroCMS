@@ -1,0 +1,60 @@
+{{ include('dashboard/header.html') }}
+
+{{ include('dashboard/navbar.html') }}
+
+    <main class="content">
+
+      <h1>Navigation</h1>
+
+      {{ flash('navigation_message') }}
+
+      <table class="table_users">
+        <thead>
+          <tr>
+            <th scope="col">Link text</th>
+            <th scope="col">Link URL</th>
+            <th scope="col">Position</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for link in menu %}
+            <tr>
+              <td>{{ link.text }}</td>
+              <td>{{ link.url }}</td>
+              <td>{{ link.position }}</td>
+              <td>{{ link.active ? 'ENABLED' : '<b>DISABLED</b>' }}</td>
+              <td>
+                <a href="?url=dashboard/navigation/edit/{{link.id}}" class="btn-edit">Edit</a>
+
+                {% if link.active %}
+                  <form style="display:inline;" method="POST" action="?url=dashboard/navigation/disable/{{link.id}}">
+                    <a href="?url=dashboard/navigation/disable/{{link.id}}" class="btn-disable" onclick="event.target.parentNode.submit(); return false;">Disable</a>
+                  </form>
+                {% else %}
+                  <form style="display:inline;" method="POST" action="?url=dashboard/navigation/enable/{{link.id}}">
+                    <a href="?url=dashboard/navigation/enable/{{link.id}}" class="btn-disable" onclick="event.target.parentNode.submit(); return false;">Enable</a>
+                  </form>
+                {% endif %}
+
+                <form style="display:inline;" method="POST" action="?url=dashboard/navigation/delete/{{link.id}}">
+                  <a href="?url=dashboard/navigation/delete/{{link.id}}" class="btn-delete" onclick="event.target.parentNode.submit(); return false;">Delete</a>
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5"></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <a href="?url=dashboard/navigation/add" class="button">Add a new link</a>
+
+    </main>
+
+  </body>
+</html>

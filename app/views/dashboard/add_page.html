@@ -1,0 +1,30 @@
+{{ include('dashboard/header.html') }}
+
+{{ include('dashboard/navbar.html') }}
+
+    <main class="content">
+
+      <h1>Add new page</h1>
+
+      <form class="form" action="?url=dashboard/page/store" method="post">
+
+        <label for="page_title">Page title:</label>
+        <input id="page_title" name="page_title" type="text" />
+
+        <!-- <label for="post_url">Post URL:</label>
+        <input id="post_url" name="post_url" type="url" /> -->
+
+        <label for="page_content">Page content:</label>
+        <textarea id="page_content" name="page_content"></textarea>
+
+        <input type="submit" value="Publish" />
+
+        <script src="/admin/ckeditor/ckeditor.js"></script>
+        <script>CKEDITOR.replace('page_content');</script>
+
+      </form>
+
+    </main>
+
+  </body>
+</html>

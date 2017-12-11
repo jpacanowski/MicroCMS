@@ -1,0 +1,26 @@
+{{ include('dashboard/header.html') }}
+
+{{ include('dashboard/navbar.html') }}
+
+    <main class="content">
+
+      <h1>Edit link</h1>
+
+      <form class="form" method="post" action="?url=dashboard/navigation/update/{{link.id}}">
+
+        <label for="link_text">Link text:</label>
+        <span class="invalid-feedback">{{ link_text_err }}</span>
+        <input id="link_text" name="link_text" type="text" class="form-control" value="{{ link.text }}" />
+
+        <label for="link_url">Link URL:</label>
+        <span class="invalid-feedback">{{ link_url_err }}</span>
+        <input id="link_url" name="link_url" type="url" class="form-control" value="{{ link.url }}" />
+
+        <input type="submit" value="Save changes" />
+
+      </form>
+
+    </main>
+
+  </body>
+</html>

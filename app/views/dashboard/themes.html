@@ -1,0 +1,25 @@
+{{ include('dashboard/header.html') }}
+
+{{ include('dashboard/navbar.html') }}
+
+    <main class="content">
+
+      <h1>Themes</h1>
+
+      <form class="form" method="post" action="?url=dashboard/navigation/store">
+
+        <label for="link_text">Select theme:</label>
+        <select name="theme" class="form-control">
+          {% for theme in themes %}
+          <option value="{{ theme }}">{{ theme }}</option>
+          {% endfor %}
+        </select>
+
+        <input type="submit" value="Change theme" />
+
+      </form>
+
+    </main>
+
+  </body>
+</html>

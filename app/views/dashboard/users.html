@@ -1,0 +1,56 @@
+{{ include('dashboard/header.html') }}
+
+{{ include('dashboard/navbar.html') }}
+
+    <main class="content">
+
+      <h1>Users</h1>
+
+      {{ flash('user_message') }}
+
+      <table class="table_users">
+        <thead>
+          <tr>
+            <th scope="col">Username</th>
+            <th scope="col">Full name</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Role</th>
+            <th scope="col">Last activity</th>
+            <th scope="col">Actions</th>
+            <!-- <th scope="col">Posts</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+            <tr>
+              <td>{{ user.username }}</td>
+              <td>{{ user.firstname }} {{ user.lastname }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role ? 'ADMIN' : 'USER' }}</td>
+              <td>{{ user.last_activity | date("d/m/Y H:i") }}</td>
+              <td>
+                <a href="?url=dashboard/users/edit/{{user.id}}" class="btn-edit1">Edit</a>
+                <form class="form_delete" style="display:inline;" method="POST" action="?url=dashboard/users/delete/{{user.id}}">
+                  <input type="hidden" name="_method" value="DELETE" />
+                  <input type="hidden" name="_token" value="{{ 'csrf_token()' }}" />
+                  <a href="?url=dashboard/users/delete/{{user.id}}" class="btn-delete1" onclick="event.target.parentNode.submit(); return false;">Usuń</a>
+                </form>
+              </td>
+              <!-- <td>{{ '30 mins ago' }}</td> -->
+              <!-- <td>{{ '0' }}</td> -->
+            </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="6"></td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <a href="?url=dashboard/users/create" class="button">Add a new user</a>
+
+    </main>
+
+  </body>
+</html>

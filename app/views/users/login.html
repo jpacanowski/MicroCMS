@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+
+    <title>MicroCMS - Login to admin panel</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="128x128" href="favicon.png" />
+
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/admin/css/normalize.css" />
+    <link rel="stylesheet" href="/admin/css/style.css" />
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="vcenter">
+      <div class="login-box">
+
+        <h2>Log in</h2>
+        <p>Prove us you are a God</p>
+        
+        <form method="post" action="?url=users/login">
+
+          {{ flash('register_success') }}
+
+          <label for="username" class="visually-hidden">Username: *</label>
+          <input id="username" type="text" name="username" placeholder="Your username" value="{{ username }}" class="{{ username_err ? 'is-invalid' : '' }}" />
+          <span class="invalid-feedback">{{ username_err }}</span>
+
+          <label for="password" class="visually-hidden">Password: *</label>
+          <input id="password" type="password" name="password" placeholder="Your password" value="{{ password }}" class="{{ password_err ? 'is-invalid' : '' }}" />
+          <span class="invalid-feedback">{{ password_err }}</span>
+
+          <input type="submit" value="Log in" />
+
+        </form>
+
+        <a href="users/register">No account? Register</a>
+
+      </div>
+    </div>
+
+  </body>
+</html>

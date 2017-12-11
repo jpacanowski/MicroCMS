@@ -1,0 +1,90 @@
+{{ include('dashboard/header.html') }}
+
+{{ include('dashboard/navbar.html') }}
+
+    <main class="content">
+
+      <h1>Dashboard</h1>
+
+      <ul class="dashboard">
+        <li>
+          <div class="infobox">
+            <div class="infobox-inner">
+              <p id="clock"></p>
+              <h3>Current time</h3>
+            </div>
+          </div>
+        </li>
+        <!-- <li>
+          <div class="infobox">
+            <div class="infobox-inner">
+              <p>{{ '$happy_number' }}</p>
+              <h3>Happy number</h3>
+            </div>
+          </div>
+        </li> -->
+        <li>
+          <div class="infobox">
+            <div class="infobox-inner">
+              <p>{{ php_version }}</p>
+              <h3>PHP version</h3>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="infobox">
+            <div class="infobox-inner">
+              <p>{{ '?' }}</p>
+              <h3>MySQL version</h3>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="infobox">
+            <div class="infobox-inner">
+              <p>0.1.0</p>
+              <h3>CMS version</h3>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="infobox">
+            <div class="infobox-inner">
+              <p>{{ posts_number }}</p>
+              <h3>Posts number</h3>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="infobox">
+            <div class="infobox-inner">
+              <p>{{ pages_number }}</p>
+              <h3>Pages number</h3>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="infobox">
+            <div class="infobox-inner">
+              <p>{{ comments_number }}</p>
+              <h3>Comments number</h3>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="infobox">
+            <div class="infobox-inner">
+              <p>{{ users_number }}</p>
+              <h3>Users number</h3>
+            </div>
+          </div>
+        </li>
+      </ul>
+
+    </main>
+
+    <script src="/admin/js/time.js"></script>
+    <script src="/admin/js/main.js"></script>
+
+  </body>
+</html>

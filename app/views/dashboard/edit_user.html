@@ -1,0 +1,39 @@
+{{ include('dashboard/header.html') }}
+
+{{ include('dashboard/navbar.html') }}
+
+    <main class="content">
+
+      <h1>Edit user</h1>
+
+      <form class="form" method="post" action="?url=dashboard/users/update/{{user.id}}">
+
+        <label for="username">Username:</label>
+        <input id="username" name="username" type="text" class="form-control" value="{{ user.username }}" />
+
+        <label for="firstname">First name:</label>
+        <input id="firstname" name="firstname" type="text" class="form-control" value="{{ user.firstname }}" />
+
+        <label for="lastname">Last name:</label>
+        <input id="lastname" name="lastname" type="text" class="form-control" value="{{ user.lastname }}" />
+
+        <label for="email">E-mail:</label>
+        <input id="email" name="email" type="email" class="form-control" value="{{ user.email }}" />
+
+        <!-- <label for="password">E-mail:</label>
+        <input id="password" name="password" type="password" class="form-control" value="{{ user.password }}" /> -->
+
+        <label for="role">User role:</label>
+        <select id="role" name="role" class="form-control">
+          <option value="0" {{ user.role == 0 ? 'selected' : '' }}>User</option>
+          <option value="1" {{ user.role == 1 ? 'selected' : '' }}>Admin</option>
+        </select>
+
+        <input type="submit" value="Save changes" />
+
+      </form>
+
+    </main>
+
+  </body>
+</html>

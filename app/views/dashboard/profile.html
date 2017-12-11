@@ -1,0 +1,32 @@
+{{ include('dashboard/header.html') }}
+
+{{ include('dashboard/navbar.html') }}
+
+    <main class="content">
+
+      <h1>My profile</h1>
+
+      {{ flash('profile_updated') }}
+
+      <form class="form" method="post" action="?url=dashboard/profile">
+
+        <label for="username">User name:</label>
+        <input id="username" name="username" type="text" value="{{ user.username }}" class="form-control" />
+
+        <label for="firstname">First name:</label>
+        <input id="firstname" name="firstname" type="text" value="{{ user.firstname }}" class="form-control" />
+
+        <label for="lastname">Last name:</label>
+        <input id="lastname" name="lastname" type="text" value="{{ user.lastname }}" class="form-control" />
+
+        <label for="email">E-mail:</label>
+        <input id="email" name="email" type="email" value="{{ user.email }}" class="form-control" />
+
+        <input type="submit" value="Save changes" />
+
+      </form>
+
+    </main>
+
+  </body>
+</html>

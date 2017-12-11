@@ -1,0 +1,54 @@
+{{ include('dashboard/header.html') }}
+
+{{ include('dashboard/navbar.html') }}
+
+    <main class="content">
+
+      <h1>Comments</h1>
+
+      {{ flash('comment_message') }}
+
+      <ul class="comments_list">
+        {% for comment in comments %}
+          <li class="comments_list__item">
+
+            <div class="comments_list_item__author">
+              From <span>{{ comment.commentUsername }}</span> on
+              <a href="?url=posts/show/{{ comment.postSlug }}">{{ comment.postTitle }}</a>
+              submitted {{ comment.commentCreatedAt }}
+            </div>
+
+            <div class="comments_list_item__comment">{{ comment.commentContent }}</div>
+
+            <ul class="comments_list_item__options">
+
+              {% if comment.commentApproved != 1 %}
+              <li class="comments_list_item_option__approve">
+                <form class="form_approve" method="POST" action="?url=dashboard/comment/approve/{{comment.commentId}}">
+                  <input type="hidden" name="_method" value="DELETE" />
+                  <input type="hidden" name="_token" value="{{ 'csrf_token()' }}" />
+                  <a href="?url=dashboard/comment/approve/{{comment.commentId}}" class="btn-approve" onclick="event.target.parentNode.submit(); return false;">Approve</a>
+                </form>
+              </li>
+              {% endif %}
+
+              <li class="comments_list_item_option__edit"><a href="?url=dashboard/comment/edit/{{comment.commentId}}" class="btn-edit">Edit</a></li>
+
+              <li class="comments_list_item_option__delete">
+                <form class="form_delete" method="POST" action="?url=dashboard/comment/delete/{{comment.commentId}}">
+                  <input type="hidden" name="_method" value="DELETE" />
+                  <input type="hidden" name="_token" value="{{ 'csrf_token()' }}" />
+                  <a href="?url=dashboard/comment/delete/{{comment.commentId}}" class="btn-delete" onclick="event.target.parentNode.submit(); return false;">Delete</a>
+                </form>
+              </li>
+
+            </ul>
+
+          </li>
+        {% endfor %}
+      </ul>
+
+    </main>
+
+  </body>
+</html>

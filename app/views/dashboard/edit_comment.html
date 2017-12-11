@@ -1,0 +1,21 @@
+{{ include('dashboard/header.html') }}
+
+{{ include('dashboard/navbar.html') }}
+
+    <main class="content">
+
+      <h1>Edit comment</h1>
+
+      <form class="form" method="post" action="?url=dashboard/comment/update/{{comment.id}}">
+
+        <label for="comment" class="visually-hidden">Comment:</label>
+        <textarea id="comment" name="comment" type="text" class="form-control" rows="8">{{ comment.content }}</textarea>
+
+        <input type="submit" value="Save changes" />
+
+      </form>
+
+    </main>
+
+  </body>
+</html>
