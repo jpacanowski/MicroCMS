@@ -19,8 +19,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.6.0/themes/prism.min.css" />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="/template/css/normalize.css" />
-    <link rel="stylesheet" href="/template/css/style.css" />
+    <link rel="stylesheet" href="{{cms.site_url}}/template/css/normalize.css" />
+    <link rel="stylesheet" href="{{cms.site_url}}/template/css/style.css" />
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -33,7 +33,7 @@
     <header class="main-header">
       <div class="wrapper">
 
-        <a href="/">
+        <a href="{{cms.site_url}}">
           <h1>Jakub Pacanowski</h1>
         </a>
 
@@ -56,7 +56,7 @@
           <header class="entry-header">
             <div class="wrapper">
 
-              <a href="?url=posts/show/{{ post.slug }}"><h2>{{ post.title }}</h2></a>
+              <a href="{{cms.site_url}}/posts/show/{{ post.slug }}"><h2>{{ post.title }}</h2></a>
 
               <div class="entry-meta">
 
@@ -82,7 +82,7 @@
 
             {{ post.postContent | raw }}
 
-            <a href="/{{ post.slug }}">Czytaj dalej »</a>
+            <a href="{{cms.site_url}}/posts/show/{{ post.slug }}">Czytaj dalej »</a>
 
           </div>
 
