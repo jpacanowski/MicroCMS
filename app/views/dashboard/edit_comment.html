@@ -6,7 +6,7 @@
 
       <h1>Edit comment</h1>
 
-      <form class="form" method="post" action="?url=dashboard/comment/update/{{comment.id}}">
+      <form class="form" method="post" action="{{ settings.site_url }}/dashboard/comment/update/{{comment.id}}">
 
         <label for="comment" class="visually-hidden">Comment:</label>
         <textarea id="comment" name="comment" type="text" class="form-control" rows="8">{{ comment.content }}</textarea>

@@ -34,7 +34,7 @@
 
         <input type="submit" value="Publish" />
 
-        <script src="/admin/ckeditor/ckeditor.js"></script>
+        <script src="{{ settings.site_url }}/admin/ckeditor/ckeditor.js"></script>
         <script>CKEDITOR.replace('post_content');</script>
 
       </form>
@@ -44,7 +44,7 @@
     <!-- <script src="/dashboard/js/jquery-3.2.1.min.js"></script>
     <script src="/dashboard/tagEditor/jquery.caret.min.js"></script>
     <script src="/dashboard/tagEditor/jquery.tag-editor.min.js"></script> -->
-    <script src="/admin/js/main.js"></script>
+    <script src="{{ settings.site_url }}/admin/js/main.js"></script>
 
   </body>
 </html>

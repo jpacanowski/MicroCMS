@@ -6,7 +6,7 @@
 
       <h1>Add a new link</h1>
 
-      <form class="form" method="post" action="?url=dashboard/navigation/store">
+      <form class="form" method="post" action="{{ settings.site_url }}/dashboard/navigation/store">
 
         <label for="link_text">Link text:</label>
         <span class="invalid-feedback">{{ link_text_err }}</span>
@@ -16,7 +16,7 @@
         <span class="invalid-feedback">{{ link_url_err }}</span>
         <input id="link_url" name="link_url" type="url" class="form-control" value="{{ link_url }}" />
 
-        <input type="submit" value="Add a new link" />
+        <input type="submit" value="Add new link" />
 
       </form>
 

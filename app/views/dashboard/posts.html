@@ -11,22 +11,22 @@
       <ul class="posts">
 
         {% for post in posts %}
-        
+
           <li class="post-entry">
             <div class="row">
-              <h3><a href="?url=posts/show/{{post.slug}}">{{ post.title }}</a></h3>
+              <h3><a href="{{ settings.site_url }}/posts/show/{{post.slug}}">{{ post.title }}</a></h3>
               <span>{{ post.visits_count }} views</span>
             </div>
             <div class="row">
               <ul class="post-entry-menu">
                 <li>
-                  <a href="?url=dashboard/post/edit/{{post.id}}" class="btn-edit">Edytuj</a>
+                  <a href="{{ settings.site_url }}/dashboard/post/edit/{{post.id}}" class="btn-edit">Edit</a>
                 </li>
                 <li>
                   <form class="form_delete" method="POST" action="?url=dashboard/post/delete/{{post.id}}">
                     <input type="hidden" name="_method" value="DELETE" />
                     <input type="hidden" name="_token" value="{{ 'csrf_token()' }}" />
-                    <a href="?url=dashboard/post/delete/{{post.id}}" class="btn-delete" onclick="event.target.parentNode.submit(); return false;">Usuń</a>
+                    <a href="{{ settings.site_url }}/dashboard/post/delete/{{post.id}}" class="btn-delete" onclick="event.target.parentNode.submit(); return false;">Delete</a>
                   </form>
                 </li>
               </ul>
@@ -38,7 +38,7 @@
 
       </ul>
 
-      <a class="button" href="?url=dashboard/post/add">Add a new post</a>
+      <a class="button" href="{{ settings.site_url }}/dashboard/post/add">Add new post</a>
 
     </main>
 

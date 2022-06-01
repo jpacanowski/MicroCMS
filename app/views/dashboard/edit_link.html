@@ -6,7 +6,7 @@
 
       <h1>Edit link</h1>
 
-      <form class="form" method="post" action="?url=dashboard/navigation/update/{{link.id}}">
+      <form class="form" method="post" action="{{ settings.site_url }}/dashboard/navigation/update/{{link.id}}">
 
         <label for="link_text">Link text:</label>
         <span class="invalid-feedback">{{ link_text_err }}</span>

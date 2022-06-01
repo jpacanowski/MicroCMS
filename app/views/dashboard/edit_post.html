@@ -8,7 +8,7 @@
 
       {{ flash('post_message') }}
 
-      <form class="form" action="?url=dashboard/post/update/{{post.id}}" method="post">
+      <form class="form" action="{{ settings.site_url }}/dashboard/post/update/{{post.id}}" method="post">
 
         <label for="post_title">Post title:</label>
         <input id="post_title" name="post_title" type="text" value="{{post.title}}" />
@@ -26,12 +26,10 @@
 
         <input type="submit" value="Save" />
 
-        <script src="/admin/ckeditor/ckeditor.js"></script>
+        <script src="{{ settings.site_url }}/admin/ckeditor/ckeditor.js"></script>
         <script>CKEDITOR.replace('post_content');</script>
 
       </form>
-
-      
 
     </main>
 

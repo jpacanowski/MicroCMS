@@ -23,20 +23,23 @@ class Dashboard extends Controller {
             'pages_number' => $this->pageModel->getPagesNumber(),
             'users_number' => $this->userModel->getUsersNumber(),
             'comments_number' => $this->commentModel->getCommentsNumber(),
+            'settings' => $this->settingModel->getSettings(),
         ]);
     }
 
     public function profile() {
 
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $user = $this->userModel->getUser(getUserId());
-            $this->view('dashboard/profile', ['user' => $user]);
+            $this->view('dashboard/profile', [
+                'user' => $this->userModel->getUser(getUserId()),
+                'settings' => $this->settingModel->getSettings(),
+            ]);
         }
         elseif($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            
+
             $data = [
                 'username' => trim($_POST['username']),
                 'firstname' => trim($_POST['firstname']),
@@ -56,13 +59,17 @@ class Dashboard extends Controller {
     }
 
     public function posts() {
-        $posts = $this->postModel->Dashboard_getPosts();
-        $this->view('dashboard/posts', ['posts' => $posts]);
+        $this->view('dashboard/posts', [
+            'posts' => $this->postModel->Dashboard_getPosts(),
+            'settings' => $this->settingModel->getSettings(),
+        ]);
     }
 
     public function pages() {
-        $pages = $this->pageModel->Dashboard_getPages();
-        $this->view('dashboard/pages', ['pages' => $pages]);
+        $this->view('dashboard/pages', [
+            'pages' => $this->pageModel->Dashboard_getPages(),
+            'settings' => $this->settingModel->getSettings(),
+        ]);
     }
 
     public function post() {
@@ -72,12 +79,16 @@ class Dashboard extends Controller {
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
             if($args === 1 && func_get_arg(0) === 'add') {
-                $this->view('dashboard/add_post');
+                $this->view('dashboard/add_post', [
+                    'settings' => $this->settingModel->getSettings()
+                ]);
             }
             elseif($args === 2 && func_get_arg(0) === 'edit') {
                 $postId = func_get_arg(1);
-                $post = $this->postModel->Dashboard_getPost($postId);
-                $this->view('dashboard/edit_post', ['post' => $post]);
+                $this->view('dashboard/edit_post', [
+                    'post' => $this->postModel->Dashboard_getPost($postId),
+                    'settings' => $this->settingModel->getSettings(),
+                ]);
             }
             else {
                 redirect('dashboard');
@@ -96,7 +107,7 @@ class Dashboard extends Controller {
                     'title_err' => '',
                     'content_err' => '',
                 ];
-                
+
                 // Validate
                 if(empty($data['title'])) {
                     $data['title_err'] = 'Please enter post title';
@@ -104,7 +115,7 @@ class Dashboard extends Controller {
                 if(empty($data['content'])) {
                     $data['content_err'] = 'Please enter post content';
                 }
-                
+
                 if(empty($_POST['title_err']) && empty($_POST['content_err'])) {
 
                     if($post = $this->postModel->addPost($data)) {
@@ -121,7 +132,7 @@ class Dashboard extends Controller {
             }
 
             elseif($args === 2 && func_get_arg(0) == 'update') {
-                
+
                 $data = [
                     'id' => '',
                     'title' => trim($_POST['post_title']),
@@ -131,7 +142,7 @@ class Dashboard extends Controller {
                     'title_err' => '',
                     'content_err' => '',
                 ];
-                                
+
                 // Validate
                 if(empty($data['title'])) {
                     $data['title_err'] = 'Please enter post title';
@@ -139,11 +150,11 @@ class Dashboard extends Controller {
                 if(empty($data['content'])) {
                     $data['content_err'] = 'Please enter post content';
                 }
-                                
+
                 if(empty($_POST['title_err']) && empty($_POST['content_err'])) {
-                
+
                     $data['id'] = func_get_arg(1);
-                    
+
                     if($this->postModel->updatePost($data)) {
                         flash('post_message', 'Post has been updated');
                         redirect('dashboard/post/edit/'.$data['id']);
@@ -173,18 +184,22 @@ class Dashboard extends Controller {
     }
 
     public function page() {
-        
+
         $args = func_num_args();
 
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
             if($args === 1 && func_get_arg(0) === 'add') {
-                $this->view('dashboard/add_page');
+                $this->view('dashboard/add_page', [
+                    'settings' => $this->settingModel->getSettings()
+                ]);
             }
             elseif($args === 2 && func_get_arg(0) === 'edit') {
                 $postId = func_get_arg(1);
-                $page = $this->pageModel->Dashboard_getPage($postId);
-                $this->view('dashboard/edit_page', ['page' => $page]);
+                $this->view('dashboard/edit_page', [
+                    'page' => $this->pageModel->Dashboard_getPage($postId),
+                    'settings' => $this->settingModel->getSettings(),
+                ]);
             }
             else {
                 redirect('dashboard');
@@ -202,7 +217,7 @@ class Dashboard extends Controller {
                     'title_err' => '',
                     'content_err' => '',
                 ];
-                
+
                 // Validate
                 if(empty($data['title'])) {
                     $data['title_err'] = 'Please enter page title';
@@ -210,7 +225,7 @@ class Dashboard extends Controller {
                 if(empty($data['content'])) {
                     $data['content_err'] = 'Please enter page content';
                 }
-                
+
                 if(empty($_POST['title_err']) && empty($_POST['content_err'])) {
 
                     if($page = $this->pageModel->addPage($data)) {
@@ -227,7 +242,7 @@ class Dashboard extends Controller {
             }
 
             elseif($args === 2 && func_get_arg(0) == 'update') {
-                
+
                 $data = [
                     'id' => '',
                     'title' => trim($_POST['page_title']),
@@ -235,7 +250,7 @@ class Dashboard extends Controller {
                     'title_err' => '',
                     'content_err' => '',
                 ];
-                                
+
                 // Validate
                 if(empty($data['title'])) {
                     $data['title_err'] = 'Please enter page title';
@@ -243,11 +258,11 @@ class Dashboard extends Controller {
                 if(empty($data['content'])) {
                     $data['content_err'] = 'Please enter page content';
                 }
-                                
+
                 if(empty($_POST['title_err']) && empty($_POST['content_err'])) {
-                
+
                     $data['id'] = func_get_arg(1);
-                    
+
                     if($this->pageModel->updatePage($data)) {
                         flash('page_message', 'Page has been updated');
                         redirect('dashboard/page/edit/'.$data['id']);
@@ -281,15 +296,21 @@ class Dashboard extends Controller {
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
 
             if($action === 'add') {
-                $this->view('dashboard/add_link');
+                $this->view('dashboard/add_link', [
+                    'settings' => $this->settingModel->getSettings()
+                ]);
             }
             elseif($action === 'edit') {
-                $link = $this->menuModel->getNavigationLink($itemId);
-                $this->view('dashboard/edit_link', ['link' => $link]);
+                $this->view('dashboard/edit_link', [
+                    'link' => $this->menuModel->getNavigationLink($itemId),
+                    'settings' => $this->settingModel->getSettings(),
+                ]);
             }
             else {
-                $menu = $this->menuModel->Dashboard_getNavigation();
-                $this->view('dashboard/navigation', ['menu' => $menu]);
+                $this->view('dashboard/navigation', [
+                    'menu' => $this->menuModel->Dashboard_getNavigation(),
+                    'settings' => $this->settingModel->getSettings(),
+                ]);
             }
         }
         elseif($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -302,16 +323,16 @@ class Dashboard extends Controller {
                     'link_text_err' => '',
                     'link_url_err' => '',
                 ];
-    
+
                 if(empty($data['link_text'])) {
                     $data['link_text_err'] = 'Please enter the link text';
                 }
                 if(empty($data['link_url'])) {
                     $data['link_url_err'] = 'Please enter the link URL';
                 }
-    
+
                 if(empty($data['link_text_err']) && empty($data['link_url_err'])) {
-    
+
                     if($this->menuModel->storeNavigationLink($data)) {
                         flash('navigation_message', 'Link have been added');
                         redirect('dashboard/navigation');
@@ -325,7 +346,7 @@ class Dashboard extends Controller {
                 }
             }
             elseif($action === 'update') {
-                
+
                 $data = [
                     'link_id' => $itemId,
                     'link_text' => trim($_POST['link_text']),
@@ -333,16 +354,16 @@ class Dashboard extends Controller {
                     'link_text_err' => '',
                     'link_url_err' => '',
                 ];
-    
+
                 if(empty($data['link_text'])) {
                     $data['link_text_err'] = 'Please enter the link text';
                 }
                 if(empty($data['link_url'])) {
                     $data['link_url_err'] = 'Please enter the link URL';
                 }
-    
+
                 if(empty($data['link_text_err']) && empty($data['link_url_err'])) {
-    
+
                     if($this->menuModel->updateNavigationLink($data)) {
                         flash('navigation_message', 'Link have been updated');
                         redirect('dashboard/navigation');
@@ -398,8 +419,9 @@ class Dashboard extends Controller {
             }
         }
         elseif($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $settings = $this->settingModel->getSettings();
-            $this->view('dashboard/settings', ['settings' => $settings]);
+            $this->view('dashboard/settings', [
+                'settings' => $this->settingModel->getSettings()
+            ]);
         }
     }
 
@@ -418,14 +440,16 @@ class Dashboard extends Controller {
     //                 $themes[] = $value;
     //             }
     //         }
-    //     } 
+    //     }
 
     //     $this->view('dashboard/themes', ['themes' => $themes]);
     // }
 
     public function comments() {
-        $comments = $this->commentModel->getComments();
-        $this->view('dashboard/comments', ['comments' => $comments]);
+        $this->view('dashboard/comments', [
+            'comments' => $this->commentModel->getComments(),
+            'settings' => $this->settingModel->getSettings(),
+        ]);
     }
 
     public function comment($action, $id) {
@@ -443,7 +467,7 @@ class Dashboard extends Controller {
                 $msg = trim($_POST['comment']);
                 $msg = strip_tags($msg);
                 $msg = stripslashes($msg);
-                
+
                 $data = [
                     'id' => $id,
                     'msg' => $msg,
@@ -464,9 +488,9 @@ class Dashboard extends Controller {
         elseif($_SERVER['REQUEST_METHOD'] == 'GET') {
 
             if($action == 'edit') {
-                $comment = $this->commentModel->getComment($id);
                 $this->view('dashboard/edit_comment', [
-                    'comment' => $comment
+                    'comment' => $this->commentModel->getComment($id),
+                    'settings' => $this->settingModel->getSettings(),
                 ]);
             }
         }
@@ -476,15 +500,21 @@ class Dashboard extends Controller {
 
         if($_SERVER['REQUEST_METHOD'] == 'GET') {
             if($action == '') {
-                $users = $this->userModel->getUsers();
-                $this->view('dashboard/users', ['users' => $users]);
+                $this->view('dashboard/users', [
+                    'users' => $this->userModel->getUsers(),
+                    'settings' => $this->settingModel->getSettings(),
+                ]);
             }
             elseif($action == 'create') {
-                $this->view('dashboard/add_user');
+                $this->view('dashboard/add_user', [
+                    'settings' => $this->settingModel->getSettings()
+                ]);
             }
             elseif($action == 'edit') {
-                $user = $this->userModel->getUser($userId);
-                $this->view('dashboard/edit_user', ['user' => $user]);
+                $this->view('dashboard/edit_user', [
+                    'user' => $this->userModel->getUser($userId),
+                    'settings' => $this->settingModel->getSettings(),
+                ]);
             }
         }
         elseif($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -501,7 +531,7 @@ class Dashboard extends Controller {
                     'username_err' => '',
                     'password_err' => '',
                 ];
-                
+
                 // Validate
                 if(empty($data['username'])) {
                     $data['username_err'] = 'Please enter username';
@@ -509,12 +539,12 @@ class Dashboard extends Controller {
                 if(empty($data['password'])) {
                     $data['password_err'] = 'Please enter password';
                 }
-                
+
                 if(empty($_POST['username_err']) && empty($_POST['password_err'])) {
 
                     // Hash password
                     $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-                    
+
                     if($user = $this->userModel->addUser($data)) {
                         flash('user_message', 'User has been added');
                         redirect('dashboard/users');
@@ -528,7 +558,7 @@ class Dashboard extends Controller {
                 }
             }
             elseif($action == 'update') {
-                
+
                 $data = [
                     'id' => $userId,
                     'username' => trim($_POST['username']),
@@ -540,7 +570,7 @@ class Dashboard extends Controller {
                     'username_err' => '',
                     //'password_err' => '',
                 ];
-                
+
                 // Validate
                 if(empty($data['username'])) {
                     $data['username_err'] = 'Please enter username';
@@ -548,12 +578,12 @@ class Dashboard extends Controller {
                 // if(empty($data['password'])) {
                 //     $data['password_err'] = 'Please enter password';
                 // }
-                
+
                 if(empty($_POST['username_err']) /* && empty($_POST['password_err']) */) {
 
                     // Hash password
                     // $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-                    
+
                     if($user = $this->userModel->updateUser($data)) {
                         flash('user_message', 'User has been updated');
                         redirect('dashboard/users');
@@ -576,6 +606,8 @@ class Dashboard extends Controller {
     }
 
     public function about() {
-        $this->view('dashboard/about');
+        $this->view('dashboard/about', [
+            'settings' => $this->settingModel->getSettings()
+        ]);
     }
 }

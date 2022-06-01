@@ -29,11 +29,11 @@
               <td>{{ user.role ? 'ADMIN' : 'USER' }}</td>
               <td>{{ user.last_activity | date("d/m/Y H:i") }}</td>
               <td>
-                <a href="?url=dashboard/users/edit/{{user.id}}" class="btn-edit1">Edit</a>
-                <form class="form_delete" style="display:inline;" method="POST" action="?url=dashboard/users/delete/{{user.id}}">
+                <a href="{{ settings.site_url }}/dashboard/users/edit/{{user.id}}" class="btn-edit1">Edit</a>
+                <form class="form_delete" style="display:inline;" method="POST" action="{{ settings.site_url }}/dashboard/users/delete/{{user.id}}">
                   <input type="hidden" name="_method" value="DELETE" />
                   <input type="hidden" name="_token" value="{{ 'csrf_token()' }}" />
-                  <a href="?url=dashboard/users/delete/{{user.id}}" class="btn-delete1" onclick="event.target.parentNode.submit(); return false;">Usuń</a>
+                  <a href="{{ settings.site_url }}/dashboard/users/delete/{{user.id}}" class="btn-delete1" onclick="event.target.parentNode.submit(); return false;">Delete</a>
                 </form>
               </td>
               <!-- <td>{{ '30 mins ago' }}</td> -->
@@ -48,7 +48,7 @@
         </tfoot>
       </table>
 
-      <a href="?url=dashboard/users/create" class="button">Add a new user</a>
+      <a href="{{ settings.site_url }}/dashboard/users/create" class="button">Add new user</a>
 
     </main>
 

@@ -7,8 +7,8 @@
       <h1>General settings</h1>
 
       {{ flash('settings_updated') }}
-      
-      <form class="form" method="post" action="?url=dashboard/settings">
+
+      <form class="form" method="post" action="{{ settings.site_url }}/dashboard/settings">
 
         <label for="site_title">Site title:</label>
         <input id="site_title" name="site_title" type="text" value="{{ settings.site_title }}" class="form-control" />

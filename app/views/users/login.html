@@ -18,8 +18,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="/admin/css/normalize.css" />
-    <link rel="stylesheet" href="/admin/css/style.css" />
+    <link rel="stylesheet" href="{{ settings.site_url }}/admin/css/normalize.css" />
+    <link rel="stylesheet" href="{{ settings.site_url }}/admin/css/style.css" />
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -34,18 +34,18 @@
 
         <h2>Log in</h2>
         <p>Prove us you are a God</p>
-        
-        <form method="post" action="?url=users/login">
+
+        <form method="post" action="{{ settings.site_url }}/users/login">
 
           {{ flash('register_success') }}
 
           <label for="username" class="visually-hidden">Username: *</label>
-          <input id="username" type="text" name="username" placeholder="Your username" value="{{ username }}" class="{{ username_err ? 'is-invalid' : '' }}" />
-          <span class="invalid-feedback">{{ username_err }}</span>
+          <input id="username" type="text" name="username" placeholder="Your username" value="{{ data.username }}" class="{{ data.username_err ? 'is-invalid' : '' }}" />
+          <span class="invalid-feedback">{{ data.username_err }}</span>
 
           <label for="password" class="visually-hidden">Password: *</label>
-          <input id="password" type="password" name="password" placeholder="Your password" value="{{ password }}" class="{{ password_err ? 'is-invalid' : '' }}" />
-          <span class="invalid-feedback">{{ password_err }}</span>
+          <input id="password" type="password" name="password" placeholder="Your password" value="{{ data.password }}" class="{{ data.password_err ? 'is-invalid' : '' }}" />
+          <span class="invalid-feedback">{{ data.password_err }}</span>
 
           <input type="submit" value="Log in" />
 

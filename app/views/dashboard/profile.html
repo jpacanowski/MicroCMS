@@ -8,7 +8,7 @@
 
       {{ flash('profile_updated') }}
 
-      <form class="form" method="post" action="?url=dashboard/profile">
+      <form class="form" method="post" action="{{ settings.site_url }}/dashboard/profile">
 
         <label for="username">User name:</label>
         <input id="username" name="username" type="text" value="{{ user.username }}" class="form-control" />

@@ -6,7 +6,7 @@
 
       <h1>Edit user</h1>
 
-      <form class="form" method="post" action="?url=dashboard/users/update/{{user.id}}">
+      <form class="form" method="post" action="{{ settings.site_url }}/dashboard/users/update/{{user.id}}">
 
         <label for="username">Username:</label>
         <input id="username" name="username" type="text" class="form-control" value="{{ user.username }}" />

@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 class Users extends Controller {
 
     public function __construct() {
         $this->userModel = $this->model('User');
+        $this->settingModel = $this->model('Setting');
     }
 
     public function register() {
@@ -35,7 +38,7 @@ class Users extends Controller {
             if(empty($data['username'])) {
                 $data['username_err'] = 'Please enter username';
             }
-            
+
             // Validate Firstname
             if(empty($data['firstname'])) {
                 $data['firstname_err'] = 'Please enter first name';
@@ -113,13 +116,13 @@ class Users extends Controller {
     }
 
     public function login() {
-        
+
         // Check for POST
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Sanitize POST data
             $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            
+
             // Init data
             $data = [
                 'username' => trim($_POST['username']),
@@ -160,12 +163,18 @@ class Users extends Controller {
                 }
                 else {
                     $data['password_err'] = 'Password incorrect';
-                    $this->view('users/login', $data);
+                    $this->view('users/login', [
+                        'data' => $data,
+                        'settings' => $settings
+                    ]);
                 }
             }
             else {
                 // Load view with errors
-                $this->view('users/login', $data);
+                $this->view('users/login', [
+                    'data' => $data,
+                    'settings' => $settings
+                ]);
             }
         }
         else if($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -177,7 +186,11 @@ class Users extends Controller {
                 'password_err' => '',
             ];
 
-            $this->view('users/login', $data);
+            $settings = $this->settingModel->getSettings();
+            $this->view('users/login', [
+                'data' => $data,
+                'settings' => $settings
+            ]);
         }
     }
 

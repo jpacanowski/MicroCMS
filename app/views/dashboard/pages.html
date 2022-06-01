@@ -11,22 +11,22 @@
       <ul class="posts">
 
         {% for page in pages %}
-        
+
           <li class="post-entry">
             <div class="row">
-              <h3><a href="?url=pages/show/{{page.slug}}">{{ page.title }}</a></h3>
+              <h3><a href="{{ settings.site_url }}/pages/show/{{page.slug}}">{{ page.title }}</a></h3>
               <span>{{ page.visits_count }} views</span>
             </div>
             <div class="row">
               <ul class="post-entry-menu">
                 <li>
-                  <a href="?url=dashboard/page/edit/{{page.id}}" class="btn-edit">Edytuj</a>
+                  <a href="{{ settings.site_url }}/dashboard/page/edit/{{page.id}}" class="btn-edit">Edit</a>
                 </li>
                 <li>
                   <form class="form_delete" method="POST" action="?url=dashboard/page/delete/{{page.id}}">
                     <input type="hidden" name="_method" value="DELETE" />
                     <input type="hidden" name="_token" value="{{ 'csrf_token()' }}" />
-                    <a href="?url=dashboard/page/delete/{{page.id}}" class="btn-delete" onclick="event.target.parentNode.submit(); return false;">Usuń</a>
+                    <a href="{{ settings.site_url }}/dashboard/page/delete/{{page.id}}" class="btn-delete" onclick="event.target.parentNode.submit(); return false;">Delete</a>
                   </form>
                 </li>
               </ul>
@@ -38,7 +38,7 @@
 
       </ul>
 
-      <a class="button" href="?url=dashboard/page/add">Add a new page</a>
+      <a class="button" href="{{ settings.site_url }}/dashboard/page/add">Add new page</a>
 
     </main>
 

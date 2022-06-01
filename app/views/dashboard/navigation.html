@@ -26,20 +26,20 @@
               <td>{{ link.position }}</td>
               <td>{{ link.active ? 'ENABLED' : '<b>DISABLED</b>' }}</td>
               <td>
-                <a href="?url=dashboard/navigation/edit/{{link.id}}" class="btn-edit">Edit</a>
+                <a href="{{ settings.site_url }}/dashboard/navigation/edit/{{link.id}}" class="btn-edit">Edit</a>
 
                 {% if link.active %}
-                  <form style="display:inline;" method="POST" action="?url=dashboard/navigation/disable/{{link.id}}">
-                    <a href="?url=dashboard/navigation/disable/{{link.id}}" class="btn-disable" onclick="event.target.parentNode.submit(); return false;">Disable</a>
+                  <form style="display:inline;" method="POST" action="{{ settings.site_url }}/dashboard/navigation/disable/{{link.id}}">
+                    <a href="{{ settings.site_url }}/dashboard/navigation/disable/{{link.id}}" class="btn-disable" onclick="event.target.parentNode.submit(); return false;">Disable</a>
                   </form>
                 {% else %}
-                  <form style="display:inline;" method="POST" action="?url=dashboard/navigation/enable/{{link.id}}">
-                    <a href="?url=dashboard/navigation/enable/{{link.id}}" class="btn-disable" onclick="event.target.parentNode.submit(); return false;">Enable</a>
+                  <form style="display:inline;" method="POST" action="{{ settings.site_url }}/dashboard/navigation/enable/{{link.id}}">
+                    <a href="{{ settings.site_url }}/dashboard/navigation/enable/{{link.id}}" class="btn-disable" onclick="event.target.parentNode.submit(); return false;">Enable</a>
                   </form>
                 {% endif %}
 
-                <form style="display:inline;" method="POST" action="?url=dashboard/navigation/delete/{{link.id}}">
-                  <a href="?url=dashboard/navigation/delete/{{link.id}}" class="btn-delete" onclick="event.target.parentNode.submit(); return false;">Delete</a>
+                <form style="display:inline;" method="POST" action="{{ settings.site_url }}/dashboard/navigation/delete/{{link.id}}">
+                  <a href="{{ settings.site_url }}/dashboard/navigation/delete/{{link.id}}" class="btn-delete" onclick="event.target.parentNode.submit(); return false;">Delete</a>
                 </form>
               </td>
             </tr>
@@ -52,7 +52,7 @@
         </tfoot>
       </table>
 
-      <a href="?url=dashboard/navigation/add" class="button">Add a new link</a>
+      <a href="{{ settings.site_url }}/dashboard/navigation/add" class="button">Add new link</a>
 
     </main>
 
