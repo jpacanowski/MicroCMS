@@ -6,7 +6,7 @@
 
       <h1>Add new post</h1>
 
-      <form class="form" method="post" action="?url=dashboard/post/store">
+      <form class="form" method="post" action="{{ settings.site_url }}/dashboard/post/store">
 
         <label for="post_title">Post title:</label>
         <input id="post_title" name="post_title" type="text" value="{{ title }}" />

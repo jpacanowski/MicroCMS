@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 class Post {
 
     private $db;
@@ -8,7 +10,7 @@ class Post {
         $this->db = new Database;
     }
 
-    public function getPosts() {
+    public function getPosts(): array {
         $this->db->query('  SELECT
                                 posts.title,
                                 posts.slug,
@@ -25,7 +27,7 @@ class Post {
         return $this->db->resultSet();
     }
 
-    public function getPostsByTag($tag) {
+    public function getPostsByTag(string $tag): array {
         $this->db->query('  SELECT
                                 posts.title,
                                 posts.slug,
@@ -44,7 +46,7 @@ class Post {
         return $this->db->resultSet();
     }
 
-    public function Dashboard_getPosts() {
+    public function Dashboard_getPosts(): array {
         $this->db->query('  SELECT
                                 posts.id,
                                 posts.slug,
@@ -59,10 +61,12 @@ class Post {
         return $this->db->resultSet();
     }
 
-    public function getPost($slug) {
+    public function getPost(string $slug): object {
 
         // Increment visits_count
-        $this->db->query('UPDATE posts SET visits_count = visits_count + 1 WHERE slug = :slug');
+        $this->db->query('  UPDATE posts
+                            SET visits_count = visits_count + 1
+                            WHERE slug = :slug');
         $this->db->bind(':slug', $slug);
         $this->db->execute();
 
@@ -81,14 +85,14 @@ class Post {
                             WHERE
                                 users.id = posts.author_id
                             AND
-                                posts.slug = :slug');
-
+                                posts.slug = :slug
+        ');
         $this->db->bind(':slug', $slug);
         return $this->db->single();
     }
 
-    public function Dashboard_getPost($postId) {
-        
+    public function Dashboard_getPost(int $postId): object {
+
         // Get the post
         $this->db->query('  SELECT
                                 posts.id,
@@ -99,12 +103,12 @@ class Post {
                                 posts
                             WHERE
                                 posts.id = :id');
-        
+
         $this->db->bind(':id', $postId);
         return $this->db->single();
     }
 
-    public function getPostComments($postId) {
+    public function getPostComments(int $postId): array {
 
         $this->db->query('  SELECT
                                 users.username AS username,
@@ -121,13 +125,13 @@ class Post {
         return $this->db->resultSet();
     }
 
-    public function getPostsNumber() {
-        $this->db->query('SELECT * FROM posts');
+    public function getPostsNumber(): int {
+        $this->db->query('SELECT id FROM posts');
         $this->db->resultSet();
         return $this->db->rowCount();
     }
 
-    public function addPost($post) {
+    public function addPost(array $post): object {
 
         $this->db->query('  INSERT INTO posts SET
                             title = :title,
@@ -144,17 +148,15 @@ class Post {
         $this->db->bind(':tags', $post['tags']);
         $this->db->bind(':content', $post['content']);
         $this->db->bind(':author_id', $post['author_id']);
-
         $this->db->execute();
 
         // Let's get the ID of the post we've just inserted to the database
         $this->db->query('SELECT id FROM posts ORDER BY id DESC LIMIT 1');
-
         return $this->db->single();
     }
 
-    public function updatePost($post) {
-        
+    public function updatePost(array $post): bool {
+
         $this->db->query('  UPDATE posts SET
                                 title = :title,
                                 content = :content,
@@ -164,18 +166,18 @@ class Post {
                             WHERE
                                 id = :id
         ');
-        
+
         $this->db->bind(':title', $post['title']);
         $this->db->bind(':content', $post['content']);
         $this->db->bind(':slug', $post['slug']);
         $this->db->bind(':tags', $post['tags']);
         $this->db->bind(':id', $post['id']);
-        
+
         return $this->db->execute();
     }
 
-    public function deletePost($postId) {
-        
+    public function deletePost(int $postId): bool {
+
         $this->db->query('DELETE FROM posts WHERE id = :id');
         $this->db->bind(':id', $postId);
         $this->db->execute();
