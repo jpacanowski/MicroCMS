@@ -8,12 +8,12 @@ class Page {
         $this->db = new Database;
     }
 
-    public function getPages() {
+    public function getPages(): array {
         $this->db->query('SELECT * FROM pages');
         return $this->db->resultSet();
     }
 
-    public function Dashboard_getPages() {
+    public function Dashboard_getPages(): array {
         $this->db->query('  SELECT
                                 pages.id,
                                 pages.slug,
@@ -24,14 +24,19 @@ class Page {
                                 pages
                             ORDER BY
                                 pages.title ASC
-        ');
+                        ');
+
         return $this->db->resultSet();
     }
 
-    public function getPage($slug) {
+    public function getPage(string $slug): object {
 
         // Increment visits_count
-        $this->db->query('UPDATE pages SET visits_count = visits_count + 1 WHERE slug = :slug');
+        $this->db->query('  UPDATE pages
+                            SET visits_count = visits_count + 1
+                            WHERE slug = :slug
+                        ');
+
         $this->db->bind(':slug', $slug);
         $this->db->execute();
 
@@ -45,14 +50,15 @@ class Page {
                             FROM
                                 pages
                             WHERE
-                                pages.slug = :slug');
+                                pages.slug = :slug
+                        ');
 
         $this->db->bind(':slug', $slug);
         return $this->db->single();
     }
 
-    public function Dashboard_getPage($pageId) {
-        
+    public function Dashboard_getPage(int $pageId): object {
+
         // Get the post
         $this->db->query('  SELECT
                                 pages.id,
@@ -61,13 +67,14 @@ class Page {
                             FROM
                                 pages
                             WHERE
-                                pages.id = :id');
-        
+                                pages.id = :id
+                        ');
+
         $this->db->bind(':id', $pageId);
         return $this->db->single();
     }
 
-    public function addPage($page) {
+    public function addPage(array $page): object {
 
         $this->db->query('  INSERT INTO pages SET
                             title = :title,
@@ -91,8 +98,8 @@ class Page {
         return $this->db->single();
     }
 
-    public function updatePage($page) {
-        
+    public function updatePage(array $page): bool {
+
         $this->db->query('  UPDATE pages SET
                                 title = :title,
                                 content = :content,
@@ -100,24 +107,24 @@ class Page {
                             WHERE
                                 id = :id
         ');
-        
+
         $this->db->bind(':title', $page['title']);
         $this->db->bind(':content', $page['content']);
         $this->db->bind(':id', $page['id']);
-        
+
         return $this->db->execute();
     }
 
-    public function deletePage($pageId) {
-        
+    public function deletePage(int $pageId): bool {
+
         $this->db->query('DELETE FROM pages WHERE id = :id');
-        
+
         $this->db->bind(':id', $pageId);
-        
+
         return $this->db->execute();
     }
 
-    public function getPagesNumber() {
+    public function getPagesNumber(): int {
         $this->db->query('SELECT * FROM pages');
         $this->db->resultSet();
         return $this->db->rowCount();
